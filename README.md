@@ -51,39 +51,39 @@ Target	Presence or absence of heart disease
 9.	Split the dataset into training and testing data. 
 10.	Apply feature scaling where required. 
 ### Code
-import pandas as pd
-import numpy as np
-
-df = pd.read_csv("heart_disease.csv")
-
-print(df.head())
-print(df.shape)
-print(df.info())
-print(df.isnull().sum())
-7. SEPARATE INPUT AND OUTPUT
-X = df.drop("target", axis=1)
-y = df["target"]
+    import pandas as pd
+    import numpy as np
+    
+    df = pd.read_csv("heart_disease.csv")
+    
+    print(df.head())
+    print(df.shape)
+    print(df.info())
+    print(df.isnull().sum())
+    7. SEPARATE INPUT AND OUTPUT
+    X = df.drop("target", axis=1)
+    y = df["target"]
 •	X → Patient characteristics. 
 •	y → Heart disease prediction. 
 ###  TRAIN-TEST SPLIT
-from sklearn.model_selection import train_test_split
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.2,
-    random_state=42,
-    stratify=y
-)
+    from sklearn.model_selection import train_test_split
+    
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y,
+        test_size=0.2,
+        random_state=42,
+        stratify=y
+    )
 •	80% → Training data 
 •	20% → Testing data 
 ## FEATURE SCALING
-from sklearn.preprocessing import StandardScaler
+    from sklearn.preprocessing import StandardScaler
+    
+    scaler = StandardScaler()
 
-scaler = StandardScaler()
-
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
 ## MACHINE LEARNING MODELS
 The following models can be compared:
 1.	Logistic Regression 
@@ -93,60 +93,60 @@ The following models can be compared:
 5.	Support Vector Machine 
 6.	Gradient Boosting 
 ## LOGISTIC REGRESSION
-from sklearn.linear_model import LogisticRegression
-
-lr = LogisticRegression(max_iter=1000)
-
-lr.fit(X_train_scaled, y_train)
-
-y_pred_lr = lr.predict(X_test_scaled)
+    from sklearn.linear_model import LogisticRegression
+    
+    lr = LogisticRegression(max_iter=1000)
+    
+    lr.fit(X_train_scaled, y_train)
+    
+    y_pred_lr = lr.predict(X_test_scaled)
 ##  K-NEAREST NEIGHBORS
-from sklearn.neighbors import KNeighborsClassifier
-
-knn = KNeighborsClassifier(n_neighbors=5)
-
-knn.fit(X_train_scaled, y_train)
-
-y_pred_knn = knn.predict(X_test_scaled)
+    from sklearn.neighbors import KNeighborsClassifier
+    
+    knn = KNeighborsClassifier(n_neighbors=5)
+    
+    knn.fit(X_train_scaled, y_train)
+    
+    y_pred_knn = knn.predict(X_test_scaled)
 ## DECISION TREE
-from sklearn.tree import DecisionTreeClassifier
+    from sklearn.tree import DecisionTreeClassifier
+    
+    dt = DecisionTreeClassifier(
+        random_state=42
+    )
+    
+    dt.fit(X_train, y_train)
 
-dt = DecisionTreeClassifier(
-    random_state=42
-)
-
-dt.fit(X_train, y_train)
-
-y_pred_dt = dt.predict(X_test)
+    y_pred_dt = dt.predict(X_test)
 ## RANDOM FOREST
-from sklearn.ensemble import RandomForestClassifier
+    from sklearn.ensemble import RandomForestClassifier
+    
+    rf = RandomForestClassifier(
+        n_estimators=100,
+        random_state=42
+    )
+    
+    rf.fit(X_train, y_train)
 
-rf = RandomForestClassifier(
-    n_estimators=100,
-    random_state=42
-)
-
-rf.fit(X_train, y_train)
-
-y_pred_rf = rf.predict(X_test)
+    y_pred_rf = rf.predict(X_test)
 ## SUPPORT VECTOR MACHINE
-from sklearn.svm import SVC
-
-svm = SVC(kernel="rbf")
-
-svm.fit(X_train_scaled, y_train)
-
-y_pred_svm = svm.predict(X_test_scaled)
+    from sklearn.svm import SVC
+    
+    svm = SVC(kernel="rbf")
+    
+    svm.fit(X_train_scaled, y_train)
+    
+    y_pred_svm = svm.predict(X_test_scaled)
 ## GRADIENT BOOSTING
-from sklearn.ensemble import GradientBoostingClassifier
-
-gb = GradientBoostingClassifier(
-    random_state=42
-)
-
-gb.fit(X_train, y_train)
-
-y_pred_gb = gb.predict(X_test)
+    from sklearn.ensemble import GradientBoostingClassifier
+    
+    gb = GradientBoostingClassifier(
+        random_state=42
+    )
+    
+    gb.fit(X_train, y_train)
+    
+    y_pred_gb = gb.predict(X_test)
 ## MODEL EVALUATION
 The models can be evaluated using:
 •	Accuracy 
@@ -155,23 +155,23 @@ The models can be evaluated using:
 •	F1-score 
 •	Confusion Matrix 
 ## Code
-from sklearn.metrics import (
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score
-)
-
-models = {
-    "Logistic Regression": y_pred_lr,
-    "KNN": y_pred_knn,
-    "Decision Tree": y_pred_dt,
-    "Random Forest": y_pred_rf,
-    "SVM": y_pred_svm,
-    "Gradient Boosting": y_pred_gb
-}
-
-for name, prediction in models.items():
+    from sklearn.metrics import (
+        accuracy_score,
+        precision_score,
+        recall_score,
+        f1_score
+    )
+    
+    models = {
+        "Logistic Regression": y_pred_lr,
+        "KNN": y_pred_knn,
+        "Decision Tree": y_pred_dt,
+        "Random Forest": y_pred_rf,
+        "SVM": y_pred_svm,
+        "Gradient Boosting": y_pred_gb
+    }
+    
+    for name, prediction in models.items():
 
     print(name)
     print("Accuracy :", accuracy_score(y_test, prediction))
@@ -188,24 +188,24 @@ Comparison
 •	Higher F1-score → Better balance between precision and recall. 
 For a medical prediction task, recall is particularly important because missing a patient who actually has the condition can be more concerning than generating an extra positive prediction.
 ## CONFUSION MATRIX
-from sklearn.metrics import confusion_matrix
-import seaborn as sns
-import matplotlib.pyplot as plt
+    from sklearn.metrics import confusion_matrix
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    
+    cm = confusion_matrix(y_test, y_pred_rf)
+    
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt="d",
+        cmap="Blues"
+    )
+    
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.title("Confusion Matrix - Random Forest")
 
-cm = confusion_matrix(y_test, y_pred_rf)
-
-sns.heatmap(
-    cm,
-    annot=True,
-    fmt="d",
-    cmap="Blues"
-)
-
-plt.xlabel("Predicted")
-plt.ylabel("Actual")
-plt.title("Confusion Matrix - Random Forest")
-
-plt.show()
+    plt.show()
 
 ## CONCLUSION
 Thus, machine learning classification models were successfully applied for heart disease prediction, and their performance was compared using standard classification evaluation metrics.
